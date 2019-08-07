@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <a href="{{ url_for('about1') }}"><h1 style="color:white">Cecom 활동</h1></a>
+  <div class="row" style="position:relative; left:40px;">
+     <div class="col-md-9">
+
+     </div>
+
+    {% block aside %}
+    <aside class="col-md-2.8" style="position:relative; left:50px" >
+      <ul>
+        <h2 style="color: white">Index</h2>
+        <a class="list-group-item" href="{{ url_for('description') }}">Members</a>
+        <a class="list-group-item" href="#" style="color:orange">First Semester</a>
+        <a class="list-group-item" href="#" style="color:red">Summer Vacation</a>
+        <a class="list-group-item" href="#" style="color:green">Second Semester</a>
+        <a class="list-group-item" href="#" style="color:purple">Winter Vacation</a>
+      </ul>
+    </aside>
+    {% endblock %}
+  </div>
+</div>
+{% endblock %}
+

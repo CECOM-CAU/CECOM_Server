@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <a href="{{ url_for('index') }}"><h1 class="name" style="color:white">Projects</h1></a>
+  <img src="static/ppt.gif" height="600" alt="star background" style="position:relative; align:center; left:20px;">
+  <div class="row" style="position:absolute; top:700px; left:430px;">
+    <div class="col-xs-3" style="margin-right:180px">
+      <a class="button" href="{{ url_for('archive') }}"><img src="static/first1.png" height="80" alt="First Semester" title="(＾• ω •＾)혜진"></a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

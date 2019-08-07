@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<ul class="container">
+    <h1 class="name" style="color:white">About Cecom</h1>
+    <hr>
+  <div class="row" style="position:relative; left:40px; padding-top:20px;">
+    <div class="col-md-8">
+      <h2 style="color:aquamarine; position:relative; right:10px;">- Members</h2>
+      {% for user in users %}
+      <article>
+        <hr>
+        <div class="row">
+          <div class="col">
+            <a class="h1" href="#" style="color:white">{{ user.username }}</a>
+            <p class="text-justify" style="color:white">{{ user.email }}</p>
+          </div>
+          <div class="col-md-2 d-flex flex-column">
+            <img class="rounded-circle mx-auto" src="static/people.png" width="56px" height="64px">
+            <p class="text-muted text-center">id: {{ user.id }}</p>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+      <aside style="position:relative; left:50px; border-left:1px solid white; padding-left:10px">
+        <ul style="color:lightskyblue; padding-bottom:250px; position:relative; left:50px;">
+          <h3>My info</h3>
+          <li>id: {{ curr_user.id }}</li>
+          <li>username: {{ session['name'] }}</li>
+          <li>email: {{ curr_user.email }}</li>
+        </ul>
+        <form action = "/description" method = "post">
+          <div style="color:white; float:right;">Id: <input type="text" name="delete_username" placeholder="delete_username" ></div>
+          <br><br>
+          <div style="color:white; float:right;">Password: <input type="text" name="password" placeholder="password"></div>
+          <br><br>
+          <input type="submit" value="Delete" size="50px" style="position:relative; height:30px; width:70px; font-size:13pt; float:right;">
+        </form>
+      </aside>
+  </div>
+</ul>
+
+{% endblock %}

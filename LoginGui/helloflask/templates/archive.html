@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+
+<div class="container" style="background-image:url(d:/Club/CECOM/Server/helloflaskstatic/year_background.jpg);">
+    <a href="{{ url_for('archive') }}"><h1 class="name" style="color:white">Cecom 활동</h1></a>
+  <div class="row" style="position:relative; left:40px;">
+      <br>
+  </div>
+</div>
+
+<div class="col-md-9" style="position:relative; left:240px;">
+       {% for file in files %}
+      <article>
+        <hr>
+        <div class="row">
+          <div class="col-md">
+            {% if file.type == 'FOLDER' %}
+            <a class="h1" href="{{ request.path + '/' + file.name }}" style="color:lightskyblue">{{ file.name }}</a>
+            <p class="text-justify" style="color:white">{{ file.type }}</p>
+            {% else %}
+            <a class="h1" href="#" style="color:lightskyblue">{{ file.name }}</a>
+            <p class="text-justify" style="color:white">{{ file.type }}</p>
+            {% endif %}
+
+          </div>
+          <div class="col-md-3 d-flex flex-column">
+            <img class="rounded-circle mx-auto" src="#" data-src="holder.js/64x64" width="64px" height="64px">
+            <p class="text-muted text-center">{{ file.ctime }}</p>
+          </div>
+        </div>
+        <small class="text-muted" style="color:white">{{ file.ctime }}</small>
+      </article>
+       {% endfor %}
+     </div>
+
+{% endblock %}

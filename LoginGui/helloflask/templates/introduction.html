@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <a href="{{ url_for('introduction') }}"><h1 class="name" style="color:white">Introduction</h1></a>
+  <img src="static/ppt.gif" height="600" alt="star background" style="position:relative; align:center; left:20px;">
+  <div class="row" style="position:absolute; top:700px; left:430px;">
+    <div class="col-xs-3" style="position:relative; left:25px;">
+      <p><img src="static/aboutus.png" height="50" alt="About us" title="(＾• ω •＾)혜진"></p>
+    </div>
+    <div class="col-xs-3" style="position:relative; left:325px;">
+      <p><img src="static/history.png" height="50" alt="History" title="∪･ω･∪수현"></p>
+    </div>
+    <div class="col-xs-3" style="position:relative; left:625px;">
+      <a class="button" href="{{ url_for('description') }}" title="(=^･ｪ･^=)은서"><img src="static/members.png" height="50" alt="Members"></a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

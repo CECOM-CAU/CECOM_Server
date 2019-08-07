@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+ 
+{% block content %}
+<div class="container">
+    <h1><br></h1>
+    <div style="position:relative; text-align:center; vertical-align:middle; padding:100px; down:150px; left:70px; margin-top:120px">
+        <a class="button" href="{{ url_for('index') }}"><img src="static/mGIF.gif" width="150" style="position:relative; left:50px; margin-bottom:40px;">
+        <img src="static/ecom.png" width="550" alt="CECOM"></a>
+    </div>
+    {% if session['logged_in'] %}
+    <h1 style="color:white; float:right">hi {{ curr_user.username }}, you're logged in!</h1>
+</div>
+    {% elif request.path == url_for('register')%}
+        {% block register %}{% endblock %}
+    {% else %}
+        {% block login %}{% endblock %}
+    {% endif %}
+{% endblock %}

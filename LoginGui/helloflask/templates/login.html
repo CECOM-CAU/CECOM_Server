@@ -1,0 +1,13 @@
+{% extends 'home.html' %}
+
+{% block login %}
+<div class="container">
+    <form action = "/login" method = "post">
+        <div style="color:white; float:right; font-size:16pt; padding:5px;">Id: <input type="text" name="username" placeholder="username" ></div>
+        <br><br>
+        <div style="color:white; float:right; font-size:16pt; padding:5px;">Password: <input type="text" name="password" placeholder="password"></div>
+        <input type="submit" value="Login" size="50px" style="position:relative; left: 1150px; height:35px; width:70px; font-size:15pt;">
+    </form>
+</div>
+{% endblock %}
+
