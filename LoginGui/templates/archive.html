@@ -11,8 +11,8 @@
 </div>
 
 <div class="col-md-9" style="position:relative; left:240px;">
-       {% for file in files %}
-      <article>
+    {% for file in files %}
+    <article>
         <hr>
         <div class="row">
           <div class="col-md">
@@ -23,7 +23,6 @@
             <a class="h1" href="#" style="color:lightskyblue">{{ file.name }}</a>
             <p class="text-justify" style="color:white">{{ file.type }}</p>
             {% endif %}
-
           </div>
           <div class="col-md-3 d-flex flex-column">
             <img class="rounded-circle mx-auto" src="#" data-src="holder.js/64x64" width="64px" height="64px">
@@ -31,8 +30,8 @@
           </div>
         </div>
         <small class="text-muted" style="color:white">{{ file.ctime }}</small>
-      </article>
-       {% endfor %}
-     </div>
+    </article>
+    {% endfor %}
+</div>
 
 {% endblock %}
