@@ -19,7 +19,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 login = LoginManager(app)
 
-
 class User(db.Model):
     __table_name__ = 'user'
 
@@ -167,7 +166,7 @@ def archive(path):
         return render_template('login.html')
     else:
         #posts = Post.query.all()
-        mypath = 'd:/Club/CECOM/ServerTest/' + path
+        mypath = os.path.join('upload', path)
         print(path)
         fileList = os.listdir(mypath)
         #print(fileList)
@@ -184,6 +183,37 @@ def archive(path):
             files.append(f)
         #print(files)
         return render_template('archive.html', path=path, files=files, title='About')
+
+@app.route('/upload', methods=['GET', 'POST'])
+def uploadPage(tempPath):
+    if request.method == 'POST':
+        conn = sqlite3.connect(os.path.join(DB_UPLOAD_FOLDER, fileLogDB))
+        curs = conn.cursor()
+        curs.execute("SELECT * FROM fileLogDB")
+        item = request.files['itemPhoto']
+        path = ""
+        if 'itemSearch' in request.form:
+            path = request.form['itemPath']
+        if not os.path.isdir(DB_UPLOAD_FOLDER):
+            os.mkdir(DB_UPLOAD_FOLDER)
+        fileName = item.filename.replace("../", "")
+        """
+         subFileName = ""
+        if(fileName[0] == '.'):
+            subFileName = '.'
+        """
+
+        print(fileName)
+        saveFilePath = os.path.join(UPLOAD_FOLDER,path)
+        item.save(os.path.join(saveFilePath,fileName))
+        curs.execute("insert into fileLogDB values ('" + session['name'] + "', '" + str(datetime.datetime.now())[:19] + "', '" + os.path.join(saveFilePath,fileName) + "')")
+        conn.commit()
+        conn.close()
+        return 'success'
+    elif request.method == 'GET':
+        if session['logged_in'] == False:
+            return "로그인이 필요합니다."
+        return render_template('ItemUpload.html')
 
 def DBinit():
     if not os.path.isdir(DB_UPLOAD_FOLDER):
