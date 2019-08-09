@@ -161,7 +161,7 @@ def delete():
 
 
 
-@app.route('/archive', defaults={'path':''}, methods=['GET','POST'])
+@app.route('/archive/', defaults={'path':''}, methods=['GET','POST'])
 @app.route('/archive/<path:path>')
 def archive(path):
     if not session.get('logged_in'):
@@ -211,40 +211,55 @@ def getFolders(path):
 
 
 
-@app.route('/upload')
+
+@app.route('/upload/', defaults={'tempPath':''}, methods=['GET', 'POST'])
 @app.route('/upload/<path:tempPath>', methods=['GET', 'POST'])
-def uploadPage(tempPath=None):
-    print("asdf :" + str(tempPath))
-    if request.method == 'POST':
-        conn = sqlite3.connect(os.path.join(DB_UPLOAD_FOLDER, fileLogDB))
-        curs = conn.cursor()
-        curs.execute("SELECT * FROM fileLogDB")
-        item = request.files['itemPhoto']
-        tempPath = ""
+def uploadPage(tempPath):
+    #print("asdf :" + str(tempPath))
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    else:
+        folders=getFolders('upload' + '/' + tempPath)
 
-        if not os.path.isdir(DB_UPLOAD_FOLDER):
-            os.mkdir(DB_UPLOAD_FOLDER)
-        fileName = item.filename.replace("../", "")
-        """
-         subFileName = ""
-        if(fileName[0] == '.'):
-            subFileName = '.'
-        """
+        if request.method == 'POST':
+            print('post')
+            #conn = sqlite3.connect(os.path.join(DB_UPLOAD_FOLDER, fileLogDB))
+            #curs = conn.cursor()
+            #curs.execute("SELECT * FROM fileLogDB")
+            items = request.files.getlist('itemPhoto')
 
-        print(fileName)
-        saveFilePath = os.path.join(UPLOAD_FOLDER,tempPath)
-        item.save(os.path.join(saveFilePath,fileName))
-        curs.execute("insert into fileLogDB values ('" + session['name'] + "', '" + str(datetime.datetime.now())[:19] + "', '" + os.path.join(saveFilePath,fileName) + "')")
-        conn.commit()
-        conn.close()
-        return url_for('archive')
-    elif request.method == 'GET':
+            if len(items) == 0:
+                return render_template('uploadPage.html', path=tempPath, folders=folders)
 
-        if session['logged_in'] == False:
-            return "로그인이 필요합니다."
-        #if tempPath != '':
-        #    tempPath = '/' + tempPath
-        return render_template('ItemUpload.html', path=tempPath)
+            if not os.path.isdir(DB_UPLOAD_FOLDER):
+                os.mkdir(DB_UPLOAD_FOLDER)
+            """
+             subFileName = ""
+            if(fileName[0] == '.'):
+                subFileName = '.'
+            """
+
+            #print(fileName)
+            saveFilePath = os.path.join(UPLOAD_FOLDER,tempPath)
+            newDir = request.form['newDir']
+            if newDir != '':
+                tempPath = tempPath + '/' + newDir
+                saveFilePath = os.path.join(UPLOAD_FOLDER, tempPath)
+                os.mkdir(saveFilePath)
+
+            for item in items:
+                item.save(os.path.join(saveFilePath,item.filename.replace("../", "")))
+            #curs.execute("insert into fileLogDB values ('" + session['name'] + "', '" + str(datetime.now())[:19] + "', '" + os.path.join(saveFilePath,fileName) + "')")
+            #conn.commit()
+            #conn.close()
+            return redirect(url_for('archive', path=tempPath))
+        elif request.method == 'GET':
+            print(tempPath)
+            if session['logged_in'] == False:
+                return url_for('login')
+            #if tempPath != '':
+            #    tempPath = '/' + tempPath
+            return render_template('uploadPage.html', path=tempPath, folders=folders)
 
 def DBinit():
     if not os.path.isdir(DB_UPLOAD_FOLDER):
@@ -255,6 +270,9 @@ def DBinit():
         curs.execute("CREATE TABLE  if not exists fileLogDB(username, time, file)")
         conn.commit()
         conn.close()
+
+def Download():
+    pass
 
 if __name__ == '__main__':
     IP = str(socket.gethostbyname(socket.gethostname()))

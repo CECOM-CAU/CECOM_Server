@@ -3,9 +3,9 @@
 {% block content %}
 <div class="container">
     <a href="{{ url_for('archive') }}"><h1 class="name" style="color:white">Projects</h1></a>
-  <img src="static/ppt.gif" height="600" alt="star background" style="position:relative; align:center; left:20px;">
+  <img src="/static/ppt.gif" height="600" alt="star background" style="position:relative; align:center; left:20px;">
 
-  <div style="position:absolute; top:650px; left:200px; width:1120px; height:40px;">
+  <div style="position:absolute; top:650px; left:400px; width:1120px; height:40px;">
     <!--Carousel Wrapper-->
     <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
 
@@ -30,7 +30,7 @@
               <!-- Content -->
               <div class="text-center white-text mx-5 wow fadeIn">
                 <h1 class="mb-4">
-                  <a target="_blank" href="{{ url_for('archive', path = year.name) }}" class="btn btn-outline-white btn-lg" title="(＾• ω •＾)혜진"><h2 style="color:white">{{ year.name }}</h2></a>
+                  <a href="{{ url_for('archive', path = year.name) }}" class="btn btn-outline-white btn-lg" title="(＾• ω •＾)혜진"><h2 style="color:white">{{ year.name }}</h2></a>
                 </h1>
               </div>
               <!-- Content -->

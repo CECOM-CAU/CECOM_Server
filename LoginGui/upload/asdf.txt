@@ -1,0 +1,60 @@
+@app.route('/archive', defaults={'path':''})
+@app.route('/archive/<path:path>')
+def archive(path):
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        #posts = Post.query.all()
+        mypath = os.path.join('upload', path)
+        print(path)
+        fileList = os.listdir(mypath)
+        #print(fileList)
+        files = []
+        for file in fileList:
+            s = file.split('.')
+            _path = mypath + '/' + file
+            fType = ''
+            if len(s) != 1:
+                fType = s[-1].upper()
+            else:
+                fType = 'FOLDER'
+            f = File(name=file, path=_path, type=fType, ctime=os.stat(path=_path).st_ctime)
+            files.append(f)
+        #print(files)
+        return render_template('archive.html', path=path, files=files, title='About')
+
+
+@app.route('/upload')
+@app.route('/upload/<path:tempPath>', methods=['GET', 'POST'])
+def uploadPage(tempPath=None):
+    print("asdf :" + str(tempPath))
+    if request.method == 'POST':
+        conn = sqlite3.connect(os.path.join(DB_UPLOAD_FOLDER, fileLogDB))
+        curs = conn.cursor()
+        curs.execute("SELECT * FROM fileLogDB")
+        item = request.files['itemPhoto']
+        tempPath = ""
+
+        if not os.path.isdir(DB_UPLOAD_FOLDER):
+            os.mkdir(DB_UPLOAD_FOLDER)
+        fileName = item.filename.replace("../", "")
+        """
+         subFileName = ""
+        if(fileName[0] == '.'):
+            subFileName = '.'
+        """
+
+        print(fileName)
+        saveFilePath = os.path.join(UPLOAD_FOLDER,tempPath)
+        item.save(os.path.join(saveFilePath,fileName))
+        curs.execute("insert into fileLogDB values ('" + session['name'] + "', '" + str(datetime.datetime.now())[:19] + "', '" + os.path.join(saveFilePath,fileName) + "')")
+        conn.commit()
+        conn.close()
+        return url_for('archive')
+    elif request.method == 'GET':
+
+        if session['logged_in'] == False:
+            return "로그인이 필요합니다."
+        #if tempPath != '':
+        #    tempPath = '/' + tempPath
+        return render_template('ItemUpload.html', path=tempPath)

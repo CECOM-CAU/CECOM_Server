@@ -27,7 +27,7 @@
     <style>
       body{ background-image: url(/static/image.jpg); background-size:cover; font-family:New Century Schoolbook; }
       ul{ font-family:Abadi; }
-      .btn{ background-image: url(static/name.png)}
+      .btn{ background-image: url(/static/name.png)}
       .nav-item{ font-size:13.5pt }
       .name{ border-bottom: 1px solid white; padding-bottom:15px; margin:15px; }
       .nav-link{ margin-left:5px; }
@@ -48,6 +48,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('archive') }}">Archive</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('uploadPage') }}">Upload</a>
             </li>
           </ul>
 

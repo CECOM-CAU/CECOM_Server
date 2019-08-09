@@ -1,15 +1,19 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="container" style="background-image:url(static/year_background.jpg);">
+<div class="container">
     <a href="{{ url_for('archive') }}"><h1 class="name" style="color:white">Cecom 활동_ {{path}}</h1></a>
   <div class="row" style="position:relative; left:40px;">
     <div class="col-md-9">
+    {% if path != '' %}
+      <a class="h1" href="{{ request.path + ['/', ''][path[-1]=='/'] + '..' }}" style="color:lightskyblue"><-</a>
+    {% endif %}
     {% for file in files %}
-    <article>
+    <article style="border-width:2px; border-style:dashed; border-color:gray; padding:1px 10px;">
         <hr>
-        <div class="row">
+        <div class="row" id="File">
           <div class="col-md">
+
             {% if file.type == 'FOLDER' %}
             <a class="h1" href="{{ request.path + '/' + file.name }}" style="color:lightskyblue">{{ file.name }}</a>
             <p class="text-justify" style="color:white">{{ file.type }}</p>
@@ -17,13 +21,15 @@
             <a class="h1" href="#" style="color:lightskyblue">{{ file.name }}</a>
             <p class="text-justify" style="color:white">{{ file.type }}</p>
             {% endif %}
+            <small class="text-muted" style="color:white">{{ file.ctime }}</small>
           </div>
+          {% if file.type == 'FOLDER' %}
           <div class="col-md-3 d-flex flex-column">
-            <img class="rounded-circle mx-auto" src="#" data-src="holder.js/64x64" width="64px" height="64px">
-            <p class="text-muted text-center">{{ file.ctime }}</p>
+            <button class="btn" src="#" style="margin-top:-10%; width:100%; height:100%; background-color:oldlace; opacity:0.3; font-size:30px; color:white;" value="DOWNLOAD"/>
+            <p class="text-muted text-center">DownLoad</p>
           </div>
+          {% endif %}
         </div>
-        <small class="text-muted" style="color:white">{{ file.ctime }}</small>
     </article>
     {% endfor %}
     </div>
@@ -35,7 +41,8 @@
         <a class="list-group-item" href="{{ url_for('introduction') }}" style="color:red">Introductions</a>
         <a class="list-group-item" href="{{ url_for('description') }}" style="color:orange">Members</a>
         <a class="list-group-item" href="{{ url_for('archive') }}" style="color:green">Archive</a>
-        <a class="list-group-item" href="{{ url_for('archive', path=now.name) }}" style="color:blue">{{ now.name }}
+        <a class="list-group-item" href="{{ url_for('archive', path=now.name) }}" style="color:blue">{{ now.name }}</a>
+
         {% for year in years|reverse if not year==now%}
           <a class="list-group-item" href="{{ url_for('archive', path=year.name) }}" style="color:purple">{{ year.name }}</a>
         {% endfor %}

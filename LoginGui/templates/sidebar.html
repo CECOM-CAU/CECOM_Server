@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="container" style="background-image:url(static/year_background.jpg);">
+<div class="container" style="background-image:url(/static/year_background.jpg);">
     <a href="{{ url_for('archive') }}"><h1 class="name" style="color:white">Cecom 활동</h1></a>
   <div class="row" style="position:relative; left:40px;">
     {% if request.path == url_for('archive') %}

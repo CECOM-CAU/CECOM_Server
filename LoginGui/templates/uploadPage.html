@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container">
+        <a href="{{ url_for('uploadPage') }}"><h1 class="name" style="color:white">Upload Page_ {{path}}</h1></a>
+        <br>
+        <form class="itemInfoLayout" action="{{ request.path }}" method="post" enctype="multipart/form-data">
+            <div>
+                <a class="itemUploadInfoLayout">
+                    <h1 style="font-size:30px; color:white">파일을 선택해주세요</h1>
+                    <input class="btn" name="itemPhoto"  type="file" multiple="multiple" style="font-size:25px; color:white"/>
+                </a>
+                <br><br>
+                <a style="">
+                    <h1 style="font-size:30px; color:white">경로를 선택하세요</h1>
+
+                    <div class="container" style="border-width:1px; border-style:solid; border-color:white;">
+                        <h1 style="font-size:25px; color:white;">새 폴더 이름 : <input name="newDir" type="text" value=""/></h1>
+                        <small class="text-muted" style="color:white; margin-top:0% ">없으면 빈칸으로</small>
+
+                        <div style="font-size:30px;">
+                            {% if path != '' %}
+                            <a href="{{ url_for('uploadPage', tempPath=path + ['/', ''][path[-1]=='/'] + ['..', ''][path == '']) }}"><-</a>
+                            <br>
+                            {% endif %}
+                            {% for folder in folders %}
+                            <a href="{{ url_for('uploadPage', tempPath=path + ['/', ''][path==''] + folder.name) }}">{{ folder.name }}</a>
+                            <br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div>
+                <input class="btn" style="margin-top:5%" name="itemPrice" type="submit" value="상품 등록하기"/>
+            </div>
+        </form>
+    </div>
+{% endblock %}
