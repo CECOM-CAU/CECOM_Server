@@ -160,30 +160,55 @@ def delete():
         return redirect(url_for('description'))
 
 
-@app.route('/archive', defaults={'path':''})
+
+@app.route('/archive', defaults={'path':''}, methods=['GET','POST'])
 @app.route('/archive/<path:path>')
 def archive(path):
     if not session.get('logged_in'):
-        return url_for('login')
+        return redirect(url_for('login'))
     else:
-        #posts = Post.query.all()
-        mypath = os.path.join('upload', path)
-        print(path)
-        fileList = os.listdir(mypath)
-        #print(fileList)
-        files = []
-        for file in fileList:
-            s = file.split('.')
-            _path = mypath + '/' + file
-            fType = ''
-            if len(s) != 1:
-                fType = s[-1].upper()
-            else:
-                fType = 'FOLDER'
+        if request.path == url_for('archive'):
+            years = getFolders('upload')
+            index = len(years)-1
+            now = years[index]
+            return render_template('carousel.html', now=now, years=years, title='About')
+        else:
+            years = getFolders('upload')
+            index = len(years)-1
+            now = years[index]
+            mypath = os.path.join('upload', path)
+            files = getFiles(mypath)
+            return render_template('archive.html', path=path , now=now, years=years, files=files, title='About')
+
+
+def getFiles(path):
+    fileList = os.listdir(path)
+    files = []
+    for file in fileList:
+        s = file.split('.')
+        _path = os.path.join(path, file)
+        #_path = path + '/' + file
+        if len(s) != 1:
+            fType = s[-1].upper()
+        else:
+            fType = 'FOLDER'
+        f = File(name=file, path=_path, type=fType, ctime=os.stat(path=_path).st_ctime)
+        files.append(f)
+    return files
+
+
+def getFolders(path):
+    fileList = os.listdir(path)
+    folders = []
+    for file in fileList:
+        s = file.split('.')
+        _path = os.path.join(path, file)
+        if len(s) == 1:
+            fType = 'FOLDER'
             f = File(name=file, path=_path, type=fType, ctime=os.stat(path=_path).st_ctime)
-            files.append(f)
-        #print(files)
-        return render_template('archive.html', path=path, files=files, title='About')
+            folders.append(f)
+    return folders
+
 
 
 @app.route('/upload')

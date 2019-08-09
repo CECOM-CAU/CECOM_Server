@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <a href="{{ url_for('archive') }}"><h1 class="name" style="color:white">Projects</h1></a>
+  <img src="static/ppt.gif" height="600" alt="star background" style="position:relative; align:center; left:20px;">
+
+  <div style="position:absolute; top:650px; left:200px; width:1120px; height:40px;">
+    <!--Carousel Wrapper-->
+    <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
+
+      <!--Indicators-->
+      <ol class="carousel-indicators">
+          {% for year in years %}
+        <li data-target="#carousel-example-{{ year.name }}z" data-slide-to="{{ year.name }}"></li>
+          {% endfor %}
+      </ol>
+      <!--/.Indicators-->
+
+      <!--Slides-->
+      <div class="carousel-inner" role="listbox">
+
+          {% for year in years if not year==now %}
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/77.jpg');
+          background-repeat: no-repeat; background-size: 600; opacity:0.0;">
+          </div>
+            <!-- Mask & flexbox options-->
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+              <!-- Content -->
+              <div class="text-center white-text mx-5 wow fadeIn">
+                <h1 class="mb-4">
+                  <a target="_blank" href="{{ url_for('archive', path = year.name) }}" class="btn btn-outline-white btn-lg" title="(＾• ω •＾)혜진"><h2 style="color:white">{{ year.name }}</h2></a>
+                </h1>
+              </div>
+              <!-- Content -->
+            </div>
+        </div>
+           {% endfor %}
+
+        <div class="carousel-item active">
+          <div class="view" style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/77.jpg');
+          background-repeat: no-repeat; background-size: 600; opacity:0.0;">
+          </div>
+            <!-- Mask & flexbox options-->
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+              <!-- Content -->
+              <div class="text-center white-text mx-5 wow fadeIn">
+                <h1 class="mb-4">
+                  <a href="{{ url_for('archive', path = now.name) }}" class="btn btn-outline-white btn-lg" title="(＾• ω •＾)혜진"><h2 style="color:aquamarine">Now: {{ now.name }}</h2></a>
+                </h1>
+              </div>
+              <!-- Content -->
+            </div>
+           </div>
+
+
+      </div>
+      <!--/.Slides-->
+
+      <!--Controls-->
+      <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev" title="∪･ω･∪수현">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next" title="(=^･ｪ･^=)은서">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+      <!--/.Controls-->
+
+    </div>
+    <!--/.Carousel Wrapper-->
+
+  </div>
+
+</div>
+{% endblock %}
+
+
+
+

@@ -1,16 +1,10 @@
 {% extends 'layout.html' %}
 
-
 {% block content %}
-
-<div class="container" style="background-image:url(d:/Club/CECOM/Server/helloflaskstatic/year_background.jpg);">
-    <a href="{{ url_for('archive') }}"><h1 class="name" style="color:white">Cecom 활동</h1></a>
+<div class="container" style="background-image:url(static/year_background.jpg);">
+    <a href="{{ url_for('archive') }}"><h1 class="name" style="color:white">Cecom 활동_ {{path}}</h1></a>
   <div class="row" style="position:relative; left:40px;">
-      <br>
-  </div>
-</div>
-
-<div class="col-md-9" style="position:relative; left:240px;">
+    <div class="col-md-9">
     {% for file in files %}
     <article>
         <hr>
@@ -32,6 +26,23 @@
         <small class="text-muted" style="color:white">{{ file.ctime }}</small>
     </article>
     {% endfor %}
-</div>
+    </div>
 
+    {% block aside %}
+    <aside class="col-md-2.8" style="position:relative; left:50px" >
+      <ul>
+        <h2 style="color: white; padding-top:15px;">Index</h2>
+        <a class="list-group-item" href="{{ url_for('introduction') }}" style="color:red">Introductions</a>
+        <a class="list-group-item" href="{{ url_for('description') }}" style="color:orange">Members</a>
+        <a class="list-group-item" href="{{ url_for('archive') }}" style="color:green">Archive</a>
+        <a class="list-group-item" href="{{ url_for('archive', path=now.name) }}" style="color:blue">{{ now.name }}
+        {% for year in years|reverse if not year==now%}
+          <a class="list-group-item" href="{{ url_for('archive', path=year.name) }}" style="color:purple">{{ year.name }}</a>
+        {% endfor %}
+      </ul>
+    </aside>
+    {% endblock %}
+  </div>
+</div>
 {% endblock %}
+

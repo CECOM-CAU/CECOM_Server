@@ -14,16 +14,14 @@
     <aside class="col-md-2.8" style="position:relative; left:50px" >
       <ul>
         <h2 style="color: white; padding-top:15px;">Index</h2>
-        <a class="list-group-item" href="{{ url_for('introduction') }}" style="color:red">Introductions</a>
-        <a class="list-group-item" href="{{ url_for('description') }}" style="color:orange">Members</a>
+        <a class="list-group-item" href="{{ url_for('introduction') }}" style="color:green">Introductions</a>
+        <a class="list-group-item" href="{{ url_for('description') }}" style="color:blue">Members</a>
+        <a class="list-group-item" href="{{ url_for('archive') }}" style="color:purple">Archive</a>
         {% for year in years %}
-        {% if year.type == 'FOLDER' %}
-          <a class="list-group-item" href="{{ url_for('archive', path=year.name) }}" style="color:black">{{ year.name }}</a>
-        {%  %}
-        {% endif %}
-        <a class="list-group-item" href="#" style="color:green">First Semester</a>
-        <a class="list-group-item" href="#" style="color:blue">Vacation</a>
-        <a class="list-group-item" href="#" style="color:purple">Second Semester</a>
+            {% if year.type == 'FOLDER' %}
+                <a class="list-group-item" href="{{ url_for('archive', path=year.name) }}" style="color:black">{{ year.name }}</a>
+            {% endif %}
+        {% endfor %}
       </ul>
     </aside>
     {% endblock %}

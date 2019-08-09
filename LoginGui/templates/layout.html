@@ -25,17 +25,18 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='layout.css') }}">
     {% block stylesheet %}{% endblock %}
     <style>
-      body{ background-image: url(static/image.jpg); background-size:cover; font-family:New Century Schoolbook; }
+      body{ background-image: url(/static/image.jpg); background-size:cover; font-family:New Century Schoolbook; }
       ul{ font-family:Abadi; }
       .btn{ background-image: url(static/name.png)}
       .nav-item{ font-size:13.5pt }
       .name{ border-bottom: 1px solid white; padding-bottom:15px; margin:15px; }
+      .nav-link{ margin-left:5px; }
     </style>
   </head>
 
   <body>
     <header class="site-header">
-      <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark mb-4">
+      <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark mb-3" style="padding:4px; padding-left:20px; padding-right:20px;">
         <a class="navbar-brand" href="{{ url_for('home') }}" style="font-size:16pt">Cecom Server</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -64,7 +65,7 @@
               <a class="nav-link" href="{{ url_for('login') }}">Login</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+              <a class="nav-link" href="{{ url_for('register') }}" style=" margin-left:10px;">Register</a>
             </li>
             {% endif %}
           </div>
@@ -73,10 +74,9 @@
     </header>
 
     <main role="main">
-        <br><br><br><br>
+        <br><br>
     <!-- Main content block -->
     {% block content %}{% endblock %}
-
     </main>
 
     <!-- Bootstrap core JavaScript

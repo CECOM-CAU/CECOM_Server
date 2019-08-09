@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <a href="{{ url_for('archive') }}">< h1 class="name" style="color:white">Projects</h1></a>
+  <img src="static/ppt.gif" height="600" alt="star background" style="position:relative; align:center; left:20px;">
+
+        <div class="row" style="position:absolute; top:700px; left:430px;">
+            <div class="col-xs-3" style="margin-right:180px">
+                <form action = "/archive" method = "get">
+                    <input type="button" name="past" value="past">
+                    <input type="submit" value="Login" size="50px" style="position:relative; left: 1150px; height:35px; width:70px; font-size:15pt;">
+                </form>
+            </div>
+            <div class="col-xs-3">
+                <a class="button" href="{{ url_for('archive', path=year_name) }}">{{ now.name }}ㅁ</a>
+            </div>
+            <div class="col-xs-3" style="margin-left:180px">
+                <input type="button" value="future" onclick="futureClick();">
+            </div>
+        </div>
+
+</div>
+{% endblock %}
